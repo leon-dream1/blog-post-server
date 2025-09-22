@@ -1,0 +1,36 @@
+{
+  "name": "blog-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:prod": "node ./dist/server.js",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier . --write",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.2",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/cors": "^2.8.19",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.3",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.0"
+  }
+}
