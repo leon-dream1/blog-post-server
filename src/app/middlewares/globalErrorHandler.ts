@@ -21,16 +21,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     },
   ];
 
-  if (err instanceof AppError) {
-    statusCode = err?.statusCode;
-    message = err.message;
-    errorSources = [
-      {
-        path: '',
-        message: err?.message,
-      },
-    ];
-  } else if (err?.code === 11000) {
+  if (err?.code === 11000) {
     statusCode = httpStatus.BAD_REQUEST;
     message = err?.errmsg;
     errorSources = [
@@ -39,7 +30,28 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
         message: err?.errmsg,
       },
     ];
+  } else if (err?.name === 'ZodError') {
+    statusCode = httpStatus.BAD_REQUEST;
+    const parsed = JSON.parse(err?.message);
+    const msg = parsed[0]?.message;
+    message = msg;
+    errorSources = [
+      {
+        path: '',
+        message: msg,
+      },
+    ];
+  } else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err.message;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
   } else if (err instanceof Error) {
+    statusCode = httpStatus.BAD_REQUEST;
     message = err.message;
     errorSources = [
       {
