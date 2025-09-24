@@ -8,6 +8,14 @@ const userRegisterValidationSchema = z.object({
   }),
 });
 
+const userLoginValidationSchema = z.object({
+  body: z.object({
+    email: z.email(),
+    password: z.string().max(20),
+  }),
+});
+
 export const userValidationSchema = {
   userRegisterValidationSchema,
+  userLoginValidationSchema,
 };

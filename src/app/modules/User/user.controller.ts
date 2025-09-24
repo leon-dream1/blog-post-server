@@ -8,13 +8,30 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
 
   const result = await userServices.saveUserToDB(userData);
 
+  res.status(hhtpStatus.CREATED).json({
+    success: true,
+    message: 'User registered successfully',
+    data: {
+      _id: result._id,
+      name: result.name,
+      email: result.email,
+    },
+  });
+});
+
+const loginUser = catchAsync(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const result = await userServices.loginUserToDB(email, password);
   res.status(hhtpStatus.OK).json({
     success: true,
-    message: 'User is created successfully',
-    data: result,
+    message: 'Login successful',
+    data: {
+      token: result,
+    },
   });
 });
 
 export const userControllers = {
   registerUser,
+  loginUser,
 };
