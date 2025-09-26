@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import { userServices } from './user.service';
 import catchAsync from '../../utils/catchAsync';
-import hhtpStatus from 'http-status';
+import httpStatus from 'http-status';
 
 const registerUser = catchAsync(async (req: Request, res: Response) => {
   const userData = req.body;
 
   const result = await userServices.saveUserToDB(userData);
 
-  res.status(hhtpStatus.CREATED).json({
+  res.status(httpStatus.CREATED).json({
     success: true,
     message: 'User registered successfully',
     data: {
@@ -22,7 +22,7 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const result = await userServices.loginUserToDB(email, password);
-  res.status(hhtpStatus.OK).json({
+  res.status(httpStatus.OK).json({
     success: true,
     message: 'Login successful',
     data: {
