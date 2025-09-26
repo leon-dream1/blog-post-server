@@ -1,6 +1,6 @@
 import config from '../../../config';
 import AppError from '../../errors/AppError';
-import { TRole } from '../User/user.constant';
+import { Role } from '../User/user.constant';
 import { User } from '../User/user.model';
 import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
@@ -28,7 +28,7 @@ const createBlogIntoDB = async (accessToken: string, blogData: TBlog) => {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid credentials!');
   }
 
-  if (isUserExists?.role !== TRole.USER) {
+  if (isUserExists?.role !== Role.USER) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
   }
 
