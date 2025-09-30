@@ -42,9 +42,6 @@ const loginUserToDB = async (email: string, password: string) => {
     expiresIn: '10d',
   });
 
-  // const accessToken = jwt.sign(jwtPayload, config.JWT_ACCESS_SECRET as string, {
-  //   expiresIn: config.JWT_EXPIRES_IN as string,
-  // });
   return accessToken;
 };
 
