@@ -19,6 +19,16 @@ const createBlog = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllBlog = catchAsync(async (req: Request, res: Response) => {
+  const result = await blogServices.getAllBlogFromDB(req.query);
+
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'Blogs fetched successfully',
+    data: result.length ? result : 'No data Found',
+  });
+});
+
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
   const updateBlogData = req.body;
   const { blogId } = req.params;
@@ -79,4 +89,5 @@ export const blogControllers = {
   deleteBlog,
   deleteBlogByAdmin,
   blockUserByAdmin,
+  getAllBlog,
 };

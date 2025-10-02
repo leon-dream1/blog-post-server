@@ -7,6 +7,8 @@ import { BlogValidationSchema } from './blog.validation';
 
 const router = Router();
 
+router.get('/', blogControllers.getAllBlog);
+
 router.post(
   '/',
   auth(Role.user),

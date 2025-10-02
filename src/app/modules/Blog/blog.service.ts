@@ -4,6 +4,51 @@ import { User } from '../User/user.model';
 import { Blog } from './blog.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import mongoose from 'mongoose';
+
+const getAllBlogFromDB = async (query: Record<string, unknown>) => {
+  const copyQueryObj = { ...query };
+
+  // search by field title or content
+  let searchTerm = '';
+
+  if (copyQueryObj?.search) {
+    searchTerm = copyQueryObj?.search as string;
+  }
+
+  const searchableFields = ['title', 'content'];
+
+  const searchQuery = Blog.find({
+    $or: searchableFields.map((searchItem) => ({
+      [searchItem]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
+
+  // filter by author
+
+  if (copyQueryObj.filter) {
+    // convert "filter" param into author field
+    copyQueryObj.author = new mongoose.Types.ObjectId(
+      copyQueryObj?.filter as string,
+    );
+    delete copyQueryObj.filter;
+  }
+
+  const excludeFields = ['search', 'sortBy', 'sortOrder'];
+  excludeFields.forEach((field) => delete copyQueryObj[field]);
+
+  const filterQuery = searchQuery.find(copyQueryObj);
+
+  // sortby
+
+  const sortBy = (query.sortBy as string) || 'createdAt';
+  const sortOrder = query.sortOrder === 'desc' ? -1 : 1;
+
+  const sortQuery = await filterQuery
+    .sort({ [sortBy]: sortOrder })
+    .populate('author', 'name email -_id');
+  return sortQuery;
+};
 
 const createBlogIntoDB = async (userData: JwtPayload, blogData: TBlog) => {
   const user = await User.findOne({ email: userData?.email });
@@ -92,4 +137,5 @@ export const blogServices = {
   deleteBlogFromDB,
   deleteBlogFromDByAdmin,
   blockUserFromDbByAdmin,
+  getAllBlogFromDB,
 };
