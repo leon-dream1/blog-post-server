@@ -61,9 +61,22 @@ const deleteBlogByAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const blockUserByAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  await blogServices.blockUserFromDbByAdmin(userId as string);
+
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'User blocked successfully',
+    data: null,
+  });
+});
+
 export const blogControllers = {
   createBlog,
   updateBlog,
   deleteBlog,
   deleteBlogByAdmin,
+  blockUserByAdmin,
 };

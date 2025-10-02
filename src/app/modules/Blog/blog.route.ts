@@ -30,4 +30,10 @@ router.delete(
   blogControllers.deleteBlogByAdmin,
 );
 
+router.patch(
+  '/users/:userId/block',
+  auth(Role.admin),
+  blogControllers.blockUserByAdmin,
+);
+
 export const blogRoutes = router;

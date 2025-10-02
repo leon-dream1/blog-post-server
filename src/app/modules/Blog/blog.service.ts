@@ -57,7 +57,6 @@ const deleteBlogFromDB = async (user: JwtPayload, blogId: string) => {
 };
 
 // admin work
-
 const deleteBlogFromDByAdmin = async (blogId: string) => {
   const isBlogExists = await Blog.findById(blogId);
   if (!isBlogExists) {
@@ -68,9 +67,29 @@ const deleteBlogFromDByAdmin = async (blogId: string) => {
   return result;
 };
 
+const blockUserFromDbByAdmin = async (userId: string) => {
+  const isUserExists = await User.findById(userId);
+  if (!isUserExists) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User not found');
+  }
+
+  const result = await User.findByIdAndUpdate(
+    userId,
+    {
+      isBlocked: true,
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+  return result;
+};
+
 export const blogServices = {
   createBlogIntoDB,
   updateBlogIntoDB,
   deleteBlogFromDB,
   deleteBlogFromDByAdmin,
+  blockUserFromDbByAdmin,
 };
