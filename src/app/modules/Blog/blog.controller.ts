@@ -36,7 +36,34 @@ const updateBlog = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteBlog = catchAsync(async (req: Request, res: Response) => {
+  const { blogId } = req.params;
+
+  await blogServices.deleteBlogFromDB(req.user as JwtPayload, blogId as string);
+
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'Blog deleted successfully',
+    data: null,
+  });
+});
+
+// admin routes
+const deleteBlogByAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { blogId } = req.params;
+
+  await blogServices.deleteBlogFromDByAdmin(blogId as string);
+
+  res.status(httpStatus.OK).json({
+    success: true,
+    message: 'Blog deleted successfully',
+    data: null,
+  });
+});
+
 export const blogControllers = {
   createBlog,
   updateBlog,
+  deleteBlog,
+  deleteBlogByAdmin,
 };

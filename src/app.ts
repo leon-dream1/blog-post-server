@@ -18,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/auth', userRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/admin', blogRoutes);
 
 app.use(globalErrorHandler);
 app.use(notFound);
