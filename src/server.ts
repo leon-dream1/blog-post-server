@@ -1,26 +1,26 @@
-// import app from './app';
-// import mongoose from 'mongoose';
-// import config from './config';
+import app from './app';
+import mongoose from 'mongoose';
+import config from './config';
 // import { Server } from 'http';
-// // import { seedAdmin } from './app/utils/seedAdmin';
+// import { seedAdmin } from './app/utils/seedAdmin';
 
-// const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 // let server: Server;
-// async function main() {
-//   try {
-//     await mongoose.connect(config.database_url as string);
-//     // seedAdmin();
+async function main() {
+  try {
+    await mongoose.connect(config.database_url as string);
+    // seedAdmin();
 
-//     server = app.listen(port, () => {
-//       console.log(`Example app listening on port ${port}`);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// main();
+main();
 
 // process.on('uncaughtException', () => {
 //   console.log(`uncaughtException is detected , shut done server`);
@@ -36,23 +36,3 @@
 //   }
 //   process.exit(1);
 // });
-
-import app from './app';
-import mongoose from 'mongoose';
-import config from './config';
-
-async function main() {
-  try {
-    // MongoDB connect
-    await mongoose.connect(config.database_url as string);
-    console.log('MongoDB connected successfully!');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-  }
-}
-
-// Immediately call main
-main();
-
-// Export app for Vercel serverless
-export default app;
