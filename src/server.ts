@@ -4,14 +4,16 @@ import config from './config';
 import { Server } from 'http';
 // import { seedAdmin } from './app/utils/seedAdmin';
 
+const port = process.env.PORT || 5000;
+
 let server: Server;
 async function main() {
   try {
     await mongoose.connect(config.database_url as string);
     // seedAdmin();
 
-    server = app.listen(config.port, () => {
-      console.log(`Example app listening on port ${config.port}`);
+    server = app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
     });
   } catch (error) {
     console.log(error);
