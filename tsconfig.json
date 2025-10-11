@@ -46,6 +46,6 @@
     "skipLibCheck": true,
 
     // extra add this
-     "esModuleInterop": true
+    "esModuleInterop": true
   }
 }
